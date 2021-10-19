@@ -4,22 +4,29 @@ import ListingsContainer from "./ListingsContainer";
 
 
 function App() {
-
+  const [allItems, setAllItems] = useState([])
   const [search, setSearch] = useState('')
   const [items, setItems] = useState([]);
 
+
+  //LEFT OFF HERE = GET ITEMS FROM FETCH TO RENDER SEARCH??
   useEffect (() => {
     fetch('http://localhost:6001/listings')
     .then((r) => r.json())
-    .then((items) => setItems(items))
+    .then((items) => {
+      setItems(items)
+      setAllItems(items)
+    })
   }, []) 
 
-  function handleSearch(value){
-    console.log(value)
-    setSearch(value)
+  function handleSearch(e){
+    //debugger;
+    setSearch(e.target.value)
     //filter based on search
-    setItems(items.filter((item) => item.description.toLowerCase().includes(search.toLowerCase())))
+    //setItems(items.filter((item) => item.description.toLowerCase().includes(e.target.value.toLowerCase())))
   }
+
+ 
 
   function handleDeleteClick(id){
     console.log(id)
@@ -34,7 +41,7 @@ function App() {
 
   return (
     <div className="app">
-      <Header search={search} handleSearchInApp={handleSearch} />
+      <Header search={search} handleSearchInApp={handleSearch} setItems={setItems} items={allItems} />
       <ListingsContainer items={items} handleDeleteClick={handleDeleteClick}/>
     </div>
   );

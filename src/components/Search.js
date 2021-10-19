@@ -1,9 +1,11 @@
 import React from "react";
 
-function Search({ search, handleSearchInApp }) {
+function Search({ search, handleSearchInApp, setItems, items }) {
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("submitted");
+    console.log(search);
+    const filteredItems = items.filter((item) => item.description.toLowerCase().includes(search.toLowerCase()))
+    setItems(filteredItems)
   }
 
 
@@ -14,7 +16,7 @@ function Search({ search, handleSearchInApp }) {
         id="search"
         placeholder="search free stuff"
         value={search}
-        onChange={(e) => handleSearchInApp(e.target.value)}
+        onChange={handleSearchInApp}
       />
       <button type="submit">🔍</button>
     </form>
